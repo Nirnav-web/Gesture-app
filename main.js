@@ -23,3 +23,26 @@ function speak(){
     var utterThis=new SpeechSynthesisUtterance(speak_data);
     synth.speak(utterThis)
 }
+function check(){
+    img=document.getElementById("captured_img");
+    classifier.classify(img,gotResult);
+}
+function gotResult(error,result){
+    if(error){
+        console.error(error);
+    }else{
+        console.log(result);
+        document.getElementById("result_gesture_name").innerHTML=result[0].confidence;
+        prediction=result[0].label;
+        speak();
+        if(result[0].label=="victory") {
+            document.getElementById("update_gesture").innerHTML="&#9996";
+        }
+        if(result[0].label=="good") {
+            document.getElementById("update_gesture").innerHTML="&#128077";
+        }
+        if(result[0].label=="awesome") {
+            document.getElementById("update_gesture").innerHTML="&#128076";
+        }
+    }
+}
